@@ -6,8 +6,8 @@ namespace Library_Management_App
 {
     internal class Library
     {
-        public List<Book> _books { get; private set; } = new();
-        public List<User> _users { get; private set; } = new();
+        public List<Book> _books { get; private set; } = [];
+        public List<User> _users { get; private set; } = [];
 
         public void AddBook(Book book)
         {

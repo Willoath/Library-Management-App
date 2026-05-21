@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Library_Management_App
 {
-    internal class Book
+    internal partial class Book
     {
         public string Title { get; private set; }
         public string Author { get; private set; }
