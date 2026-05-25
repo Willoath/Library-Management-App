@@ -19,15 +19,29 @@ namespace Library_Management_App
             _users.Add(user);
             Console.WriteLine("User has been added succesfully");
         }
+        public User? Login(string name)
+        {
+            foreach (User user in _users)
+            {
+                if (user.Name == name)
+                {
+                    return user;
+                }
+            }
+
+            return null;
+        }
         public void BorrowBook(User user, Book book)
         {
             
             user.BorrowBook(book);
-            
+            _books.Remove(book);
+
         }
         public void ReturnBook(User user, Book book)
         {
             user.ReturnBook(book);
+            _books.Add(book);
         }
         public void ShowAvailableBooks()
         {
@@ -38,5 +52,6 @@ namespace Library_Management_App
                 Console.WriteLine($"{i + 1} - {book.Title} by {book.Author}");
             }
         }
+
     }
 }

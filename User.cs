@@ -8,12 +8,12 @@ namespace Library_Management_App
     {
         public string Name { get; private set; }
         public int Id { get; private set; }
-        public List<Book> _borrowed { get; private set; } = new();
+        public List<Book> _borrowed { get; private set; } = [];
 
         public User(string name, int id) {
             Name = name;
             Id = id;
-            List<Book> _borrowed = new();
+            List<Book> _borrowed = [];
         }
 
         public bool BorrowBook(Book book)
@@ -21,7 +21,8 @@ namespace Library_Management_App
             if (book.Borrow())
             {
                 _borrowed.Add(book);
-                Console.WriteLine("Book has been borrowed.");
+                DateTime borrowDate = DateTime.Now;
+                Console.WriteLine("Book has been borrowed." + borrowDate);
                 return true;
             }
             else {
@@ -33,7 +34,8 @@ namespace Library_Management_App
             if (book.Return() && _borrowed.Contains(book))
             {
                 _borrowed.Remove(book);
-                Console.WriteLine("Book has been returned.");
+                DateTime returnDate = DateTime.Now;
+                Console.WriteLine("Book has been returned." + returnDate);
                 return true;
             }
             else {

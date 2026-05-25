@@ -1,73 +1,170 @@
 ﻿using Library_Management_App;
 using System.ComponentModel;
+using System.Xml.Serialization;
+using System.Text.Json;
 
 
 
 
- Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 001);
- Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", 002);
+Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 001);
+Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", 002);
 
- User user1 = new User("John Doe", 001);
-
- Library library = new Library();
-
- library.AddBook(book1);
- library.AddBook(book2);
- library.RegisterUser(user1);
+Library library = new Library();
+User? currentUser = null;
+library.AddBook(book1);
+library.AddBook(book2);
 
 
 bool isRunning = true;
+
 
 while (isRunning)
 {
     Console.WriteLine();
     Console.WriteLine("===== LIBRARY MENU =====");
+    Console.WriteLine("Current user: " + (currentUser?.Name ?? "No user logged in"));
     Console.WriteLine("1. Show available books");
     Console.WriteLine("2. Borrow book");
     Console.WriteLine("3. Return book");
     Console.WriteLine("4. Add a book to the library");
     Console.WriteLine("5. Show borrowed books");
-    Console.WriteLine("6. Exit");
-    Console.Write("Choose option: ");
+    Console.WriteLine("6. Log in");
+    Console.WriteLine("7. Log out");
+    Console.WriteLine("8. Register user");
+    Console.WriteLine("9. Exit");
+    Console.Write("Choose option: \n");
 
-    string choice = Console.ReadLine();
+    int.TryParse(Console.ReadLine(), out int choice);
 
-    switch (choice)
+        switch (choice)
     {
-        case "1":
+        case 1:
             library.ShowAvailableBooks();
             break;
 
-        case "2":
+        case 2:
+
+            if (currentUser == null)
+            {
+                Console.WriteLine("You must log in first.");
+                break;
+            }
+
             Console.Write("\nChoose book number: \n");
-            int index = Convert.ToInt32(Console.ReadLine());
-            library.BorrowBook(user1, library._books[index -1]);
+
+            if (int.TryParse(Console.ReadLine(), out int index))
+            {
+                if (index > 0 && index <= library._books.Count)
+                {
+                    library.BorrowBook(currentUser, library._books[index - 1]);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid book number.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid book number.");
+            }
+
             break;
 
-        case "3":
+        case 3:
+
+            if (currentUser == null)
+            {
+                Console.WriteLine("You must log in first.");
+                break;
+            }
+
             Console.Write("\nChoose book number: \n");
-            index = Convert.ToInt32(Console.ReadLine());
-            library.ReturnBook(user1, library._books[index - 1]);
+
+            if (int.TryParse(Console.ReadLine(), out index))
+            {
+                if (index > 0 && index <= currentUser._borrowed.Count)
+                {
+                    library.ReturnBook(currentUser, currentUser._borrowed[index - 1]);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid book number.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid book number.");
+            }
+
             break;
 
-        case "4":
-            Console.Write("Enter book title: ");
+        case 4:
+
+            Console.Write("Enter book title: \n");
             string title = Console.ReadLine();
 
             Console.Write("Enter author: ");
             string author = Console.ReadLine();
 
-            Console.Write("Enter id: ");
-            int id = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter id: \n");
 
-            Book book = new Book(title, author, id);
-            library.AddBook(book);
+            if (int.TryParse(Console.ReadLine(), out int id))
+            {
+                Book book = new Book(title, author, id);
+                library.AddBook(book);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid book ID.");
+            }
+
             break;
-        case"5":
+
+        case 5:
+
+            if (currentUser == null)
+            {
+                Console.WriteLine("You must log in first.");
+                break;
+            }
+
             Console.WriteLine("\nBorrowed books:\n");
-            Console.WriteLine(user1._borrowed);
+
+            for (int i = 0; i < currentUser._borrowed.Count; i++)
+            {
+                Console.WriteLine(i + 1 + ". " +
+                    currentUser._borrowed[i].Title +
+                    " by " +
+                    currentUser._borrowed[i].Author);
+            }
+
             break;
-        case "6":
+        case 6:
+            Console.Write("Enter user name: ");
+
+            currentUser = library.Login(Console.ReadLine());
+
+            if (currentUser != null)
+            {
+                Console.WriteLine("Logged in successfully.");
+            }
+            else
+            {
+                Console.WriteLine("User not found.");
+            }
+
+            break;
+        case 7:
+            currentUser = null;
+            Console.WriteLine("Logged out.");
+            break;
+        case 8:
+            Console.Write("Enter user name: ");
+            string registerName = Console.ReadLine();
+            User newUser = new User(registerName, library._users.Count + 1);
+            library.RegisterUser(newUser);
+            break;
+        case 9:
             isRunning = false;
             Console.WriteLine("Application closed.");
             break;
