@@ -3,16 +3,10 @@ using System.ComponentModel;
 using System.Xml.Serialization;
 using System.Text.Json;
 
-
-
-
-Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 001);
-Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", 002);
-
 Library library = new Library();
 User? currentUser = null;
-library.AddBook(book1);
-library.AddBook(book2);
+Data data = new Data();
+data.LoadData(library);
 
 
 bool isRunning = true;
@@ -68,6 +62,8 @@ while (isRunning)
                 Console.WriteLine("Invalid input. Please enter a valid book number.");
             }
 
+            data.SaveData(library);
+
             break;
 
         case 3:
@@ -96,6 +92,8 @@ while (isRunning)
                 Console.WriteLine("Invalid input. Please enter a valid book number.");
             }
 
+            data.SaveData(library);
+
             break;
 
         case 4:
@@ -117,6 +115,8 @@ while (isRunning)
             {
                 Console.WriteLine("Invalid input. Please enter a valid book ID.");
             }
+
+            data.SaveData(library);
 
             break;
 
@@ -163,6 +163,9 @@ while (isRunning)
             string registerName = Console.ReadLine();
             User newUser = new User(registerName, library._users.Count + 1);
             library.RegisterUser(newUser);
+
+            data.SaveData(library);
+
             break;
         case 9:
             isRunning = false;

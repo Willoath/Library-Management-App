@@ -49,7 +49,7 @@ namespace Library_Management_App
             {
                 Book book = _books[i];
 
-                Console.WriteLine($"{i + 1} - {book.Title} by {book.Author}");
+                Console.WriteLine($"\n{i + 1} - {book.Title} by {book.Author}");
             }
         }
 

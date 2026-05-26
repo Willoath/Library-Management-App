@@ -6,9 +6,13 @@ namespace Library_Management_App
 {
     internal class User
     {
-        public string Name { get; private set; }
-        public int Id { get; private set; }
-        public List<Book> _borrowed { get; private set; } = [];
+        public string Name { get;  set; }
+        public int Id { get; set; }
+        public List<Book> _borrowed { get; set; } = [];
+
+        public User() { 
+
+        }
 
         public User(string name, int id) {
             Name = name;
