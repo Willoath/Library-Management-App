@@ -26,11 +26,11 @@ namespace Library_Management_App
             {
                 _borrowed.Add(book);
                 DateTime borrowDate = DateTime.Now;
-                Console.WriteLine("Book has been borrowed." + borrowDate);
+                WriteLine("Book has been borrowed." + borrowDate);
                 return true;
             }
             else {
-                Console.WriteLine("Book could not be borrowed.");
+                WriteLine("Book could not be borrowed.");
                 return false; }
         }
         public bool ReturnBook(Book book)
@@ -39,11 +39,11 @@ namespace Library_Management_App
             {
                 _borrowed.Remove(book);
                 DateTime returnDate = DateTime.Now;
-                Console.WriteLine("Book has been returned." + returnDate);
+                WriteLine("Book has been returned." + returnDate);
                 return true;
             }
             else {
-                Console.WriteLine("Book could not be returned.");
+                WriteLine("Book could not be returned.");
                 return false; }
         }
     }

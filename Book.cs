@@ -28,12 +28,12 @@ namespace Library_Management_App
         {
             if (!IsAvailable)
             {
-                Console.WriteLine("Book is not available.");
+                WriteLine("Book is not available.");
                 return false;
             }
             else
             {
-                Console.WriteLine("Book can be borrowed");
+                WriteLine("Book can be borrowed");
                 IsAvailable = false;
                 return true;
             }

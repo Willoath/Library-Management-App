@@ -5,7 +5,7 @@ using System.Text.Json;
 
 Library library = new Library();
 User? currentUser = null;
-Data data = new Data();
+Data_ data = new Data_();
 data.LoadData(library);
 
 
@@ -14,21 +14,21 @@ bool isRunning = true;
 
 while (isRunning)
 {
-    Console.WriteLine();
-    Console.WriteLine("===== LIBRARY MENU =====");
-    Console.WriteLine("Current user: " + (currentUser?.Name ?? "No user logged in"));
-    Console.WriteLine("1. Show available books");
-    Console.WriteLine("2. Borrow book");
-    Console.WriteLine("3. Return book");
-    Console.WriteLine("4. Add a book to the library");
-    Console.WriteLine("5. Show borrowed books");
-    Console.WriteLine("6. Log in");
-    Console.WriteLine("7. Log out");
-    Console.WriteLine("8. Register user");
-    Console.WriteLine("9. Exit");
-    Console.Write("Choose option: \n");
+    WriteLine();
+    WriteLine("===== LIBRARY MENU =====");
+    WriteLine("Current user: " + (currentUser?.Name ?? "No user logged in"));
+    WriteLine("1. Show available books");
+    WriteLine("2. Borrow book");
+    WriteLine("3. Return book");
+    WriteLine("4. Add a book to the library");
+    WriteLine("5. Show borrowed books");
+    WriteLine("6. Log in");
+    WriteLine("7. Log out");
+    WriteLine("8. Register user");
+    WriteLine("9. Exit");
+    Write("Choose option: \n");
 
-    int.TryParse(Console.ReadLine(), out int choice);
+    int.TryParse(ReadLine(), out int choice);
 
         switch (choice)
     {
@@ -40,13 +40,13 @@ while (isRunning)
 
             if (currentUser == null)
             {
-                Console.WriteLine("You must log in first.");
+                WriteLine("You must log in first.");
                 break;
             }
 
-            Console.Write("\nChoose book number: \n");
+            Write("\nChoose book number: \n");
 
-            if (int.TryParse(Console.ReadLine(), out int index))
+            if (int.TryParse(ReadLine(), out int index))
             {
                 if (index > 0 && index <= library._books.Count)
                 {
@@ -54,12 +54,12 @@ while (isRunning)
                 }
                 else
                 {
-                    Console.WriteLine("Invalid book number.");
+                    WriteLine("Invalid book number.");
                 }
             }
             else
             {
-                Console.WriteLine("Invalid input. Please enter a valid book number.");
+                WriteLine("Invalid input. Please enter a valid book number.");
             }
 
             data.SaveData(library);
@@ -70,13 +70,13 @@ while (isRunning)
 
             if (currentUser == null)
             {
-                Console.WriteLine("You must log in first.");
+                WriteLine("You must log in first.");
                 break;
             }
 
-            Console.Write("\nChoose book number: \n");
+            Write("\nChoose book number: \n");
 
-            if (int.TryParse(Console.ReadLine(), out index))
+            if (int.TryParse(ReadLine(), out index))
             {
                 if (index > 0 && index <= currentUser._borrowed.Count)
                 {
@@ -84,12 +84,12 @@ while (isRunning)
                 }
                 else
                 {
-                    Console.WriteLine("Invalid book number.");
+                    WriteLine("Invalid book number.");
                 }
             }
             else
             {
-                Console.WriteLine("Invalid input. Please enter a valid book number.");
+                WriteLine("Invalid input. Please enter a valid book number.");
             }
 
             data.SaveData(library);
@@ -98,22 +98,22 @@ while (isRunning)
 
         case 4:
 
-            Console.Write("Enter book title: \n");
-            string title = Console.ReadLine();
+            Write("Enter book title: \n");
+            string title = ReadLine();
 
-            Console.Write("Enter author: ");
-            string author = Console.ReadLine();
+            Write("Enter author: ");
+            string author = ReadLine();
 
-            Console.Write("Enter id: \n");
+            Write("Enter id: \n");
 
-            if (int.TryParse(Console.ReadLine(), out int id))
+            if (int.TryParse(ReadLine(), out int id))
             {
                 Book book = new Book(title, author, id);
                 library.AddBook(book);
             }
             else
             {
-                Console.WriteLine("Invalid input. Please enter a valid book ID.");
+                WriteLine("Invalid input. Please enter a valid book ID.");
             }
 
             data.SaveData(library);
@@ -124,15 +124,15 @@ while (isRunning)
 
             if (currentUser == null)
             {
-                Console.WriteLine("You must log in first.");
+                WriteLine("You must log in first.");
                 break;
             }
 
-            Console.WriteLine("\nBorrowed books:\n");
+            WriteLine("\nBorrowed books:\n");
 
             for (int i = 0; i < currentUser._borrowed.Count; i++)
             {
-                Console.WriteLine(i + 1 + ". " +
+                WriteLine(i + 1 + ". " +
                     currentUser._borrowed[i].Title +
                     " by " +
                     currentUser._borrowed[i].Author);
@@ -140,27 +140,27 @@ while (isRunning)
 
             break;
         case 6:
-            Console.Write("Enter user name: ");
+            Write("Enter user name: ");
 
-            currentUser = library.Login(Console.ReadLine());
+            currentUser = library.Login(ReadLine());
 
             if (currentUser != null)
             {
-                Console.WriteLine("Logged in successfully.");
+                WriteLine("Logged in successfully.");
             }
             else
             {
-                Console.WriteLine("User not found.");
+                WriteLine("User not found.");
             }
 
             break;
         case 7:
             currentUser = null;
-            Console.WriteLine("Logged out.");
+            WriteLine("Logged out.");
             break;
         case 8:
-            Console.Write("Enter user name: ");
-            string registerName = Console.ReadLine();
+            Write("Enter user name: ");
+            string registerName = ReadLine();
             User newUser = new User(registerName, library._users.Count + 1);
             library.RegisterUser(newUser);
 
@@ -169,11 +169,11 @@ while (isRunning)
             break;
         case 9:
             isRunning = false;
-            Console.WriteLine("Application closed.");
+            WriteLine("Application closed.");
             break;
 
         default:
-            Console.WriteLine("Invalid option.");
+            WriteLine("Invalid option.");
             break;
     }
 }

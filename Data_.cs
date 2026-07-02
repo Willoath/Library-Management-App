@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Library_Management_App
 {
-    internal class Data
+    internal class Data_
     {
         public void SaveData(Library library)
         {

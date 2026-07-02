@@ -12,12 +12,12 @@ namespace Library_Management_App
         public void AddBook(Book book)
         {
             _books.Add(book);
-            Console.WriteLine("Book has been added to the library.");
+            WriteLine("Book has been added to the library.");
         }
         public void RegisterUser(User user)
         {
             _users.Add(user);
-            Console.WriteLine("User has been added succesfully");
+            WriteLine("User has been added succesfully");
         }
         public User? Login(string name)
         {
@@ -49,7 +49,7 @@ namespace Library_Management_App
             {
                 Book book = _books[i];
 
-                Console.WriteLine($"\n{i + 1} - {book.Title} by {book.Author}");
+                WriteLine($"\n{i + 1} - {book.Title} by {book.Author}");
             }
         }
 
